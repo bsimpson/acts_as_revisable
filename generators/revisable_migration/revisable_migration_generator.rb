@@ -10,7 +10,8 @@ class RevisableMigrationGenerator < Rails::Generator::NamedBase
         ["revisable_current_at",       "datetime"],
         ["revisable_revised_at",       "datetime"],
         ["revisable_deleted_at",       "datetime"],
-        ["revisable_is_current",       "boolean", 1]
+        ["revisable_is_current",       "boolean", 1],
+        ["revisable_changes",         "string"]
       ]
       
       m.migration_template 'migration.rb', 'db/migrate',

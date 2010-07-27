@@ -24,8 +24,10 @@ module WithoutScope
         base.class_inheritable_hash :revisable_shared_objects
         base.revisable_shared_objects = {}
         
+
         base.instance_eval do
           attr_accessor :revisable_new_params, :revisable_revision
+          serialize :revisable_changes
           
           define_callbacks :before_revise, :after_revise, :before_revert, :after_revert, :before_changeset, :after_changeset, :after_branch_created
                     
@@ -296,6 +298,7 @@ module WithoutScope
       def before_revisable_create #:nodoc:
         self[:revisable_is_current] = true
         self.revision_number ||= 0
+        self.revisable_changes = self.changes
       end
       
       # Checks whether or not a +Revisable+ should be revised.
@@ -319,6 +322,7 @@ module WithoutScope
           return false
         end
         
+        self.revisable_changes = self.changes
         self.revisable_revision = self.to_revision
       end
       
